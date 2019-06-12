@@ -319,7 +319,7 @@ if ($task == 'delete') {
 		<div class="wrap">
 			<h2><?php _e( 'There is not any quotes', 'plgsoft' ) ?></h2>
 			<?php print_tabs_menus(); ?>
-			<div class="plgsoft-tabd-content">
+			<div class="plgsoft-tabs-content">
 				<div class="plgsoft-tab">
 					<div class="plgsoft-sub-tab-nav">
 						<div style="float: left;">
