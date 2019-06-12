@@ -330,11 +330,11 @@ function print_tabs_menus() {
 	} else {
 		echo '<li class="list-nav-item"><a class="" href="'.$admin_url_site.'manage_quotesmeta"><i class="fa fa-quote-left"></i>' . __( "Quotes Meta" ) . '</a></li>';
 	}
-	if ($page == 'manage_coreorders') {
-		echo '<li class="list-nav-item-active"><a class="" href="'.$admin_url_site.'manage_coreorders"><i class="fa fa-reorder"></i>' . __( "Core Orders" ) . '</a></li>';
-	} else {
-		echo '<li class="list-nav-item"><a class="" href="'.$admin_url_site.'manage_coreorders"><i class="fa fa-reorder"></i>' . __( "Core Orders" ) . '</a></li>';
-	}
+	// if ($page == 'manage_coreorders') {
+	// 	echo '<li class="list-nav-item-active"><a class="" href="'.$admin_url_site.'manage_coreorders"><i class="fa fa-reorder"></i>' . __( "Core Orders" ) . '</a></li>';
+	// } else {
+	// 	echo '<li class="list-nav-item"><a class="" href="'.$admin_url_site.'manage_coreorders"><i class="fa fa-reorder"></i>' . __( "Core Orders" ) . '</a></li>';
+	// }
 	if ($page == 'manage_messages') {
 		echo '<li class="list-nav-item-active"><a class="" href="'.$admin_url_site.'manage_messages"><i class="fa fa-inbox"></i>' . __( "Messages" ) . '</a></li>';
 	} else {

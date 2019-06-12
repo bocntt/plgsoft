@@ -12,7 +12,7 @@ dbDelta(create_plgsoft_coupon_table_sql());
 dbDelta(create_plgsoft_quotes_table_sql());
 dbDelta(create_plgsoft_quotesdetails_table_sql());
 dbDelta(create_plgsoft_quotesmeta_table_sql());
-dbDelta(create_plgsoft_coreorders_table_sql());
+//dbDelta(create_plgsoft_coreorders_table_sql());
 dbDelta(create_plgsoft_messages_table_sql());
 dbDelta(create_plgsoft_favorite_table_sql());
 dbDelta(create_plgsoft_question_table_sql());

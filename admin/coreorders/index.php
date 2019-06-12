@@ -13,7 +13,7 @@ if (strlen($page) > 0) {
 }
 $task = isset($_REQUEST["task"]) ? trim($_REQUEST["task"]) : "list";
 $is_save = isset($_REQUEST["is_save"]) ? trim($_REQUEST["is_save"]) : 0;
-$autoid = isset($_REQUEST["autoid"]) ? trim($_REQUEST["autoid"]) : 0;
+$id = isset($_REQUEST["id"]) ? trim($_REQUEST["id"]) : 0;
 $is_validate = false;
 $order_date_error = ''; $order_ip_error = ''; $order_time_error = '';
 $order_data_error = ''; $order_items_error = '';
@@ -23,13 +23,13 @@ $msg_id = "";
 $manage_list_url = get_plgsoft_admin_url(array('page' => 'manage_coreorders', 'keyword' => $keyword));
 
 if ($task == 'delete') {
-	$coreorders_database->delete_plgsoft_coreorders($autoid);
+	$coreorders_database->delete_plgsoft_coreorders($id);
 	$task = "list";
 	$msg_id = "The core orders is deleted successfully";
 } else {
 	if ($is_save==0) {
-		if ($autoid == 0) {
-			$autoid          = isset($_POST["autoid"]) ? trim($_POST["autoid"]) : 0;
+		if ($id == 0) {
+			$id          = isset($_POST["id"]) ? trim($_POST["id"]) : 0;
 			$order_ip        = isset($_POST["order_ip"]) ? trim($_POST["order_ip"]) : "";
 			$order_date      = isset($_POST["order_date"]) ? trim($_POST["order_date"]) : "";
 			$order_time      = isset($_POST["order_time"]) ? trim($_POST["order_time"]) : "";
@@ -46,8 +46,8 @@ if ($task == 'delete') {
 			$shipping_label  = isset($_POST["shipping_label"]) ? trim($_POST["shipping_label"]) : "";
 			$payment_data    = isset($_POST["payment_data"]) ? trim($_POST["payment_data"]) : "";
 		} else {
-			$coreorders_obj = $coreorders_database->get_plgsoft_coreorders_by_id($autoid);
-			$autoid          = $coreorders_obj['autoid'];
+			$coreorders_obj = $coreorders_database->get_plgsoft_coreorders_by_id($id);
+			$id          = $coreorders_obj['id'];
 			$order_ip        = $coreorders_obj['order_ip'];
 			$order_date      = $coreorders_obj['order_date'];
 			$order_time      = $coreorders_obj['order_time'];
@@ -112,8 +112,8 @@ if ($task == 'delete') {
 			$coreorders_array['user_login_name'] = $user_login_name;
 			$coreorders_array['shipping_label']  = $shipping_label;
 			$coreorders_array['payment_data']    = $payment_data;
-			if ($autoid > 0) {
-				$coreorders_array['autoid'] = $autoid;
+			if ($id > 0) {
+				$coreorders_array['id'] = $id;
 				$coreorders_database->update_plgsoft_coreorders($coreorders_array);
 				$task = "list";
 				$msg_id = "The core orders is edited successfully";
@@ -187,12 +187,12 @@ if ($task == 'delete') {
 							<tbody>
 								<?php foreach ($list_coreorders as $coreorders_item) { ?>
 									<?php
-									$edit_link = get_plgsoft_admin_url(array('page' => 'manage_coreorders', 'autoid' => $coreorders_item['autoid'], 'task' => 'edit', 'keyword' => $keyword, 'start' => $start));
-									$delete_link = get_plgsoft_admin_url(array('page' => 'manage_coreorders', 'autoid' => $coreorders_item['autoid'], 'task' => 'delete', 'keyword' => $keyword, 'start' => $start));
+									$edit_link = get_plgsoft_admin_url(array('page' => 'manage_coreorders', 'id' => $coreorders_item['id'], 'task' => 'edit', 'keyword' => $keyword, 'start' => $start));
+									$delete_link = get_plgsoft_admin_url(array('page' => 'manage_coreorders', 'id' => $coreorders_item['id'], 'task' => 'delete', 'keyword' => $keyword, 'start' => $start));
 									?>
 									<tr onmouseover="this.style.backgroundColor='#f1f1f1';" onmouseout="this.style.backgroundColor='white';">
 										<td>
-											<?php echo esc_html( $coreorders_item['autoid'] ); ?>
+											<?php echo esc_html( $coreorders_item['id'] ); ?>
 										</td>
 										<td>
 											<?php echo esc_html( $coreorders_item['order_ip'] ); ?>
@@ -269,7 +269,7 @@ if ($task == 'delete') {
 	$coreorders_url = get_plgsoft_admin_url(array('page' => 'manage_coreorders', 'task' => 'add'));
 	?>
 	<div class="wrap">
-		<?php if ($autoid > 0) { ?>
+		<?php if ($id > 0) { ?>
 			<h2><?php _e( 'Edit Core Orders', 'plgsoft' ) ?></h2>
 		<?php } else { ?>
 			<h2><?php _e( 'Add Core Orders', 'plgsoft' ) ?></h2>
@@ -284,8 +284,8 @@ if ($task == 'delete') {
 				<div class="plgsoft-sub-tab-content">
 					<form class="form" method="post" action="<?php echo esc_url( $manage_list_url ); ?>" id="frmCoreOrders" name="frmCoreOrders" enctype="multipart/form-data">
 						<input type="hidden" id="is_save" name="is_save" value="1">
-						<input type="hidden" id="autoid" name="autoid" value="<?php echo esc_attr( $autoid ); ?>">
-						<?php if ($autoid > 0) { ?>
+						<input type="hidden" id="id" name="id" value="<?php echo esc_attr( $id ); ?>">
+						<?php if ($id > 0) { ?>
 							<input type="hidden" id="task" name="task" value="edit">
 							<input type="hidden" id="start" name="start" value="<?php echo esc_attr( $start ); ?>">
 						<?php } else { ?>

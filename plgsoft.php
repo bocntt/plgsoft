@@ -35,7 +35,7 @@ if(is_admin()) {
 		add_submenu_page('manage_cities', "Coupon", "Coupon", 'manage_options', 'manage_coupon', 'manage_coupon');
 		add_submenu_page('manage_cities', "Quotes", "Quotes", 'manage_options', 'manage_quotes', 'manage_quotes');
 		add_submenu_page('manage_cities', "Quotes Meta", "Quotes Meta", 'manage_options', 'manage_quotesmeta', 'manage_quotesmeta');
-		add_submenu_page('manage_cities', "Core Orders", "Core Orders", 'manage_options', 'manage_coreorders', 'manage_coreorders');
+		// add_submenu_page('manage_cities', "Core Orders", "Core Orders", 'manage_options', 'manage_coreorders', 'manage_coreorders');
 		add_submenu_page('manage_cities', "Messages", "Messages", 'manage_options', 'manage_messages', 'manage_messages');
 		add_submenu_page('manage_cities', "Favorite", "Favorite", 'manage_options', 'manage_favorite', 'manage_favorite');
 		add_submenu_page('manage_cities', "Blocked", "Blocked", 'manage_options', 'manage_blocked', 'manage_blocked');

@@ -21,7 +21,7 @@ $msg_id = "";
 $manage_list_url = get_plgsoft_admin_url(array('page' => 'manage_countries', 'keyword' => $keyword));
 
 if ($task == 'delete') {
-	$countries_database->delete_plgsoft_countries($country_id);
+	$countries_database->delete_plgsoft_countries($country_key);
 	$task = "list";
 	$msg_id = "The country is deleted successfully";
 } elseif ($task == 'import_default_data') {
@@ -273,16 +273,16 @@ if ($task == 'delete') {
 	$task = "list";
 	$msg_id = "These countries are imported successfully";
 } elseif ($task == 'active') {
-	$countries_database->active_plgsoft_countries($country_id);
+	$countries_database->active_plgsoft_countries($country_key);
 	$task = "list";
 	$msg_id = "The country is actived";
 } elseif ($task == 'deactive') {
-	$countries_database->deactive_plgsoft_countries($country_id);
+	$countries_database->deactive_plgsoft_countries($country_key);
 	$task = "list";
 	$msg_id = "The country is deactived";
 } else {
 	if ($is_save==0) {
-		if ($country_id==0) {
+		if ($country_key=="") {
 			$country_key = isset($_POST["country_key"]) ? trim($_POST["country_key"]) : "";
 			$country_name = isset($_POST["country_name"]) ? trim($_POST["country_name"]) : "";
 			$order_listing = isset($_POST["order_listing"]) ? trim($_POST["order_listing"]) : 0;
@@ -290,7 +290,7 @@ if ($task == 'delete') {
 			$seo_title = isset($_POST["seo_title"]) ? trim($_POST["seo_title"]) : "";
 			$seo_description = isset($_POST["seo_description"]) ? trim($_POST["seo_description"]) : "";
 		} else {
-			$country_obj = $countries_database->get_plgsoft_countries_by_country_id($country_id);
+			$country_obj = $countries_database->get_plgsoft_countries_by_country_key($country_key);
 			$country_name = $country_obj['country_name'];
 			$order_listing = $country_obj['order_listing'];
 			$is_active = $country_obj['is_active'];
@@ -307,7 +307,7 @@ if ($task == 'delete') {
 		$seo_title = isset($_POST["seo_title"]) ? trim($_POST["seo_title"]) : "";
 		$seo_description = isset($_POST["seo_description"]) ? trim($_POST["seo_description"]) : "";
 
-		$check_exist_country_key = $countries_database->check_exist_country_key($country_key, $country_id);
+		$check_exist_country_key = $countries_database->check_exist_country_key($country_key);
 		if ((strlen($country_key) > 0) && !$check_exist_country_key) {
 			$is_validate = true;
 		} else {
@@ -321,7 +321,7 @@ if ($task == 'delete') {
 				}
 			}
 		}
-		$check_exist = $countries_database->check_exist_country_name($country_name, $country_id);
+		$check_exist = $countries_database->check_exist_country_name($country_name, $country_key);
 		if ((strlen($country_name) > 0) && !$check_exist && $is_validate) {
 			$is_validate = true;
 		} else {
@@ -363,8 +363,8 @@ if ($task == 'delete') {
 			$country_array['seo_description'] = $seo_description;
 			$country_array['country_key'] = strtolower($country_key);
 
-			if ($country_id > 0) {
-				$country_array['country_id'] = $country_id;
+			if (strlen($country_key) > 0) {
+				$country_array['country_key'] = $country_key;
 				$countries_database->update_plgsoft_countries($country_array);
 				$task = "list";
 				$msg_id = "The country is edited successfully";
@@ -429,8 +429,8 @@ if ($task == 'delete') {
 							<tbody>
 								<?php foreach ($list_countries as $country_item) { ?>
 									<?php
-									$edit_link = get_plgsoft_admin_url(array('page' => 'manage_countries', 'country_id' => $country_item['country_id'], 'task' => 'edit', 'keyword' => $keyword, 'start' => $start));
-									$delete_link = get_plgsoft_admin_url(array('page' => 'manage_countries', 'country_id' => $country_item['country_id'], 'task' => 'delete', 'keyword' => $keyword, 'start' => $start));
+									$edit_link = get_plgsoft_admin_url(array('page' => 'manage_countries', 'country_key' => $country_item['country_key'], 'task' => 'edit', 'keyword' => $keyword, 'start' => $start));
+									$delete_link = get_plgsoft_admin_url(array('page' => 'manage_countries', 'country_key' => $country_item['country_key'], 'task' => 'delete', 'keyword' => $keyword, 'start' => $start));
 									?>
 									<tr onmouseover="this.style.backgroundColor='#f1f1f1';" onmouseout="this.style.backgroundColor='white';">
 										<td>
@@ -444,10 +444,10 @@ if ($task == 'delete') {
 										<td class="text-center">
 											<?php
 											if ($country_item['is_active'] == 1) {
-												$status_link = get_plgsoft_admin_url(array('page' => 'manage_countries', 'country_id' => $country_item['country_id'], 'task' => 'deactive', 'keyword' => $keyword, 'start' => $start));
+												$status_link = get_plgsoft_admin_url(array('page' => 'manage_countries', 'country_key' => $country_item['country_key'], 'task' => 'deactive', 'keyword' => $keyword, 'start' => $start));
 												$status_lable = __( 'Active', 'plgsoft' );
 											} else {
-												$status_link = get_plgsoft_admin_url(array('page' => 'manage_countries', 'country_id' => $country_item['country_id'], 'task' => 'active', 'keyword' => $keyword, 'start' => $start));
+												$status_link = get_plgsoft_admin_url(array('page' => 'manage_countries', 'country_key' => $country_item['country_key'], 'task' => 'active', 'keyword' => $keyword, 'start' => $start));
 												$status_lable = __( 'Deactive', 'plgsoft' );
 											}
 											?>
@@ -516,7 +516,7 @@ if ($task == 'delete') {
 	$country_url = get_plgsoft_admin_url(array('page' => 'manage_countries', 'task' => 'add'));
 	?>
 	<div class="wrap">
-		<?php if ($country_id > 0) { ?>
+		<?php if (strlen($country_key) > 0) { ?>
 			<h2><?php _e( 'Edit Country', 'plgsoft' ) ?></h2>
 		<?php } else { ?>
 			<h2><?php _e( 'Add Country', 'plgsoft' ) ?></h2>
@@ -531,8 +531,8 @@ if ($task == 'delete') {
 				<div class="plgsoft-sub-tab-content">
 					<form class="form" method="post" action="<?php echo esc_url( $manage_list_url ); ?>" id="frmCountry" name="frmCountry" enctype="multipart/form-data">
 						<input type="hidden" id="is_save" name="is_save" value="1">
-						<input type="hidden" id="country_id" name="country_id" value="<?php echo $country_id; ?>">
-						<?php if ($country_id > 0) { ?>
+						<input type="hidden" id="country_key" name="country_key" value="<?php echo $country_key; ?>">
+						<?php if (strlen($country_key) > 0) { ?>
 							<input type="hidden" id="task" name="task" value="edit">
 							<input type="hidden" id="start" name="start" value="<?php echo $start; ?>">
 						<?php } else { ?>

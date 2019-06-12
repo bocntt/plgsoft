@@ -442,7 +442,7 @@ if ($task == 'delete') {
 										<?php echo $quotes_string; ?>
 										<?php
 										// Testing send emails
-										$emailTo = 'chiennvit@gmail.com';
+										$emailTo = 'bocntt01@gmail.com';
 										$subject = 'Get Quotes';
 										$message = $quotes_string;
 										$emailID = "admin";

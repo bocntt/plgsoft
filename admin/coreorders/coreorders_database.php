@@ -33,7 +33,7 @@ class coreorders_database {
 		if (strlen($table_name) == 0) {
 			return 0;
 		} else {
-			$sql = "SELECT COUNT(autoid) FROM " . $table_name;
+			$sql = "SELECT COUNT(id) FROM " . $table_name;
 			$sql .= " WHERE 1=1";
 			if (strlen($keyword) > 0) {
 				$sql .= " AND (LOWER(order_ip) LIKE '%%%s%%')";
@@ -55,7 +55,7 @@ class coreorders_database {
 		if (strlen($table_name) == 0) {
 			return array();
 		} else {
-			$sql = "SELECT autoid, order_ip, order_date, order_time, order_data, user_id,
+			$sql = "SELECT id, order_ip, order_date, order_time, order_data, user_id,
 				order_id, order_items, order_email, order_shipping, order_tax, order_total, order_status, user_login_name, shipping_label, payment_data" .
 				" FROM " . $table_name;
 			$sql .= " WHERE 1=1";
@@ -64,7 +64,7 @@ class coreorders_database {
 				$sql .= " OR (LOWER(order_date) LIKE '%%%s%%')";
 				$sql .= " OR (LOWER(order_time) LIKE '%%%s%%')";
 			}
-			$sql .= " ORDER BY autoid DESC";
+			$sql .= " ORDER BY id DESC";
 			if (($limit > 0) && ($offset >= 0)) {
 				$sql .= " LIMIT " . $limit . " OFFSET " . $offset;
 			}
@@ -82,7 +82,7 @@ class coreorders_database {
 				if (!in_array($item_obj->order_id, $this->array_order_id)) {
 					$this->array_order_id[] = $item_obj->order_id;
 				}
-				$array_result[$index]['autoid']          = $item_obj->autoid;
+				$array_result[$index]['id']          = $item_obj->id;
 				$array_result[$index]['order_ip']        = $item_obj->order_ip;
 				$array_result[$index]['order_date']      = $item_obj->order_date;
 				$array_result[$index]['order_time']      = $item_obj->order_time;
@@ -104,7 +104,7 @@ class coreorders_database {
 		}
 	}
 
-	function get_plgsoft_coreorders_by_id($autoid) {
+	function get_plgsoft_coreorders_by_id($id) {
 		global $wpdb;
 		$table_name = $wpdb->prefix . $this->table_name;
 		$result_obj = array();
@@ -112,8 +112,8 @@ class coreorders_database {
 			return $result_obj;
 		} else {
 			$sql = "SELECT * " .
-				" FROM " . $table_name . " WHERE autoid='%d'";
-			$result_obj = $wpdb->get_row($wpdb->prepare($sql, $autoid), ARRAY_A);
+				" FROM " . $table_name . " WHERE id='%d'";
+			$result_obj = $wpdb->get_row($wpdb->prepare($sql, $id), ARRAY_A);
 			return $result_obj;
 		}
 	}
@@ -168,7 +168,7 @@ class coreorders_database {
 		global $wpdb;
 		$table_name = $wpdb->prefix . $this->table_name;
 		if (strlen($table_name) > 0) {
-			$autoid          = isset($item_obj['autoid']) ? (int) trim($item_obj['autoid']) : 0;
+			$id          = isset($item_obj['id']) ? (int) trim($item_obj['id']) : 0;
 			$order_ip        = isset($item_obj['order_ip']) ? trim($item_obj['order_ip']) : "";
 			$order_date      = isset($item_obj['order_date']) ? trim($item_obj['order_date']) : "";
 			$order_time      = isset($item_obj['order_time']) ? trim($item_obj['order_time']) : "";
@@ -200,7 +200,7 @@ class coreorders_database {
 				" user_login_name='%s', " .
 				" shipping_label='%s', " .
 				" payment_data='%s' " .
-			" WHERE autoid='%d'";
+			" WHERE id='%d'";
 			$wpdb->query(
 				$wpdb->prepare(
 					$sql,
@@ -220,23 +220,23 @@ class coreorders_database {
 						$user_login_name,
 						$shipping_label,
 						$payment_data,
-						$autoid
+						$id
 					)
 				)
 			);
 		}
 	}
 
-	function delete_plgsoft_coreorders($autoid) {
+	function delete_plgsoft_coreorders($id) {
 		global $wpdb;
 		$table_name = $wpdb->prefix . $this->table_name;
-		if (($autoid > 0) && (strlen($table_name) > 0)) {
+		if (($id > 0) && (strlen($table_name) > 0)) {
 			global $wpdb;
-			$sql = "DELETE FROM ".$table_name." WHERE autoid='%d'";
+			$sql = "DELETE FROM ".$table_name." WHERE id='%d'";
 			$wpdb->query(
 				$wpdb->prepare(
 					$sql,
-					$autoid
+					$id
 				)
 			);
 		}

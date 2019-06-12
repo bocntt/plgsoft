@@ -1,17 +1,5 @@
 <?php
 require_once(wp_plugin_plgsoft_admin_dir . "/languages.php");
-
-// wp_enqueue_style('admin_plgsoft_styling', plgsoft_domain . 'admin/plgsoft.css', false, plgsoft_version, "all");
-// Begin need change by chiennv
-// wp_enqueue_style('admin_plgsoft_jquery_ui', 'http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css', false, "1.11.4", "all");
-// wp_deregister_script('jquery');
-// wp_register_script('jquery', "http://code.jquery.com/jquery-1.10.2.js", false, '1.10.2', false);
-// wp_enqueue_script('jquery');
-// wp_deregister_script('jquery-ui');
-// wp_register_script('jquery-ui', "http://code.jquery.com/ui/1.11.4/jquery-ui.js", false, '1.11.4', false);
-// wp_enqueue_script('jquery-ui');
-// End need change by chiennv
-
 /**
  * Add Scripts Change
  * By Bo Nguyen
